@@ -55,7 +55,7 @@ const TasksByCategory = () => {
       setApiUrl(`${baseAPIUrl}?completed=${queries.completed}`);
       return;
     }
-
+    console.log(baseAPIUrl)
     setApiUrl(baseAPIUrl);
   }, [queries]);
 

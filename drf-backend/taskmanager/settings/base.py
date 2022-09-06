@@ -36,7 +36,7 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
 #Fix django 4.1
 
-CSRF_TRUSTED_ORIGINS = ['http://*.127.0.0.1','http://localhost:8080','http://*.localhost','https://*.localhost','https://localhost:8080','https://127.0.0.1:8080']
+CSRF_TRUSTED_ORIGINS = ['http://*.127.0.0.1','http://localhost:8080','http://*.localhost','https://*.localhost','https://localhost:8080','https://127.0.0.1:8080','http://api.taskmanager.local']
 
 
 # Application definition
@@ -175,4 +175,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8080",
+    "http://tasks.coursesbin.com"
 ]
