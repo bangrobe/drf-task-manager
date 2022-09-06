@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: npm run start
+    container_name: react_frontend
+    restart: on-failure
+    environment:
+      - WDS_SOCKET_PORT=0 #Fix websocket connect to..failed
+      - CHOKIDAR_USEPOLLING=true #Fix react hot loading
+      - WATCHPACK_POLLING=true
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/frontend_prod
+      - /frontend/node_modules
