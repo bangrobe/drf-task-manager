@@ -33,7 +33,7 @@ services:
       context: ./docker/production/nginx
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "8081:80"
     networks:
       - taskmanager-django
   db:
