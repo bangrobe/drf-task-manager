@@ -8,7 +8,9 @@ services:
     # command: npm run start
     container_name: react_frontend_prod
     ports:
-      - '3000:80'
+      - '80:80'
+      - '443:443'
     volumes:
       - ./:/frontend
       - /frontend/node_modules
+  

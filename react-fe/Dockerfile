@@ -34,7 +34,7 @@ COPY --from=builder /frontend/build /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # EXPOSE PORT
-EXPOSE 80
+EXPOSE 80 443
 
 # START nginx
 
