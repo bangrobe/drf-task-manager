@@ -21,6 +21,22 @@ services:
       WAIT_HOSTS: db:5432
     networks:
       - taskmanager-django
+  
+  nginx:
+    restart: always
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+    build:
+      context: ./docker/production/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - taskmanager-django
+  
   db:
     image: postgres:13.6-alpine
     restart: always 
