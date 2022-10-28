@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/production/django/Dockerfile
+    container_name: drf_taskmanager
+    command: /scripts/start
+    volumes:
+      - .:/code
+      - uwsgi_data:/tmp/uwsgi/
+      - static_volume:/code/staticfiles/
+      - media_volume:/code/mediafiles/
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=taskmanager.settings.production
+    networks:
+      - taskmanager-django
+
+  nginx:
+    restart: always
+    container_name: taskmanager_nginx
+    depends_on:
+      - web
+    build: 
+      context: ./docker/production/nginx/
+      dockerfile: Dockerfile
+    volumes:
+      - .:/code
+      - uwsgi_data:/tmp/uwsgi/
+      # - static_volume:/code/staticfiles/
+    ports:
+      - "8081:80"
+    networks:
+      - taskmanager-django
+      - npm
+  db:
+    image: postgres:13.6-alpine
+    restart: always 
+    container_name: taskmanager_pg
+    volumes:
+      - postgres_taskmanager:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - 5432:5432
+    networks:
+      - taskmanager-django
+
+networks:
+  taskmanager-django:
+  npm:
+    name: nginxproxyman
+    external: true
+
+volumes:
+  postgres_taskmanager:
+  uwsgi_data:
+  static_volume:
+  media_volume:

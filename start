@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o pipefail
+
+set -o nounset
+
+/scripts/wait-for-it.sh db:5432 --
+python3 manage.py makemigrations
+python3 manage.py migrate --no-input
+python3 manage.py collectstatic --no-input
+# python3 manage.py runserver 0.0.0.0:8000
+# gunicorn --bind 0.0.0.0:8008 taskmanager.wsgi:application //gunicorn working, but not connected to nginx
+uwsgi --ini /code/config/uwsgi/uwsgi.ini

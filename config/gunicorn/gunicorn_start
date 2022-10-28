@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME='taskmanager'
+DJANGODIR=/home/tasker/app
+SOCKFILE=/home/tasker/gunicorn.sock
+USER=tasker
+GROUP=webapps
+NUM_WORKERS=3
+DJANGO_SETTINGS_MODULE=taskmanager.settings.production
+
+TIMEOUT=120
+
+cd $DJANGODIR
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+gunicorn taskmanager.wsgi:application \
+--name $NAME \
+--workers $NUM_WORKERS \
+--timeout $TIMEOUT \
+--user=$USER --group=$GROUP \
+--bind=unix:$SOCKFILE \
+--log-level=debug \
+--log-file=-
