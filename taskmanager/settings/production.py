@@ -43,4 +43,19 @@ DEFAULT_FROM_EMAIL = "info@taskmanager.com"
 DOMAIN = os.environ.get("DOMAIN")
 SITE_NAME = "Task Manager"
 
-STATIC_ROOT = '/var/www/mysite/assets/'
+# STATIC_ROOT = '/var/www/mysite/assets/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+#Cors settings
+CORS_ALLOWED_ORIGINS = [
+    "http://taskmanager.bangdigital.xyz",
+    "https://taskmanager.bangdigital.xyz"
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    # match localhost with any port
+    r"^http:\/\/localhost:*([0-9]+)?$",
+    r"^https:\/\/localhost:*([0-9]+)?$",
+    r"(http|https):\/\/[a-z]+?.local",
+    r"http:\/\/[0-9.]+:([0-9]+)?"
+]
