@@ -1,0 +1,7 @@
+.env
+.env.dev
+taskmanager.sock
+/ssl
+/staticfiles
+/mediafiles
+/postgres_taskmanager
